@@ -1,0 +1,22 @@
+[
+    {
+      "GuildId": -1,
+      "GuildName": "replace_with_guild_name",
+      "Users": [
+        {
+          "UserId": -1,
+          "Username": "sample_username",
+          "LastActiveOn": "2020-09-21T17:42:38.4849998-05:00",
+          "LastAction": "doing a sample activity."
+        }
+      ],
+      "Transitions": [
+        {
+          "UserId": -1,
+          "FromUsername": "old_username",
+          "ToUsername": "sample_username"
+        }
+      ]
+    }
+]
+

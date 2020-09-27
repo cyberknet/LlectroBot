@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\build\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\build\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Context\**" />
+    <Compile Remove="Extensions\**" />
+    <Compile Remove="Preconditions\**" />
+    <Compile Remove="Roles\**" />
+    <Compile Remove="UserTracking\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Context\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <EmbeddedResource Remove="Preconditions\**" />
+    <EmbeddedResource Remove="Roles\**" />
+    <EmbeddedResource Remove="UserTracking\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Context\**" />
+    <None Remove="Extensions\**" />
+    <None Remove="Preconditions\**" />
+    <None Remove="Roles\**" />
+    <None Remove="UserTracking\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Cards\LlectroBotCardContext.cs" />
+    <Compile Remove="Cards\LlectroBotCardStackManager.cs" />
+    <Compile Remove="Cards\SetupCard.cs" />
+    <Compile Remove="Cards\SetupStep.cs" />
+    <Compile Remove="IDiscordBot.cs" />
+    <Compile Remove="Modules\CommandDescriptionAttribute.cs" />
+    <Compile Remove="Modules\CommandModuleBase.cs" />
+    <Compile Remove="Modules\CommandSyntaxAttribute.cs" />
+    <Compile Remove="Modules\CommandUsage.cs" />
+    <Compile Remove="Modules\CommandUsageAttribute.cs" />
+    <Compile Remove="Modules\GuildCommandModuleBase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Discord.Net" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Discord.Cards\Discord.Cards.csproj" />
+    <ProjectReference Include="..\LlectroBot.Core\LlectroBot.Core.csproj" />
+    <ProjectReference Include="..\LlectroBot.Games\LlectroBot.Games.csproj" />
+    <ProjectReference Include="..\LlectroBot.Guild\LlectroBot.Guild.csproj" />
+    <ProjectReference Include="..\LlectroBot.Help\LlectroBot.Help.csproj" />
+    <ProjectReference Include="..\LlectroBot.Polling\LlectroBot.Polling.csproj" />
+    <ProjectReference Include="..\LlectroBot.UserTracking\LlectroBot.UserTracking.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.template.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="usertracking.template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
