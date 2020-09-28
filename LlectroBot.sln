@@ -19,9 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LlectroBot.Help", "LlectroB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LlectroBot.Games", "LlectroBot.Games\LlectroBot.Games.csproj", "{6E8216D0-E2AF-456B-B98D-A20D5BF059DF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2E2998BF-0DA8-4B90-8509-67F457A012E1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Details", "Project Details", "{2E2998BF-0DA8-4B90-8509-67F457A012E1}"
 	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
