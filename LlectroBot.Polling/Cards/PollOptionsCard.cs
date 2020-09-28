@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Cards;
@@ -11,10 +12,15 @@ namespace LlectroBot.Polling.Cards
     {
         private bool Asked { get; set; }
         public string[] CompleteWords { get; set; }
-        public PollOptionsCard(string message, bool isCancellable, string[] completeWords, string[] cancelWords = null, string retryMessage = null)
+        private TimeSpan _duration;
+        
+        private IPollTracker _pollTracker;
+        public PollOptionsCard(string message, bool isCancellable, IPollTracker pollTracker, TimeSpan duration, string[] completeWords, string[] cancelWords = null, string retryMessage = null)
             : base(message, isCancellable, cancelWords, retryMessage)
         {
             CompleteWords = completeWords;
+            _pollTracker = pollTracker;
+            _duration = duration;
         }
         public async override Task<CardResult> MessageReceived(IMessage message, CardResult lastCardResult = CardResult.None)
         {
@@ -24,6 +30,7 @@ namespace LlectroBot.Polling.Cards
             if (!Asked)
             {
                 await ReplyAsync($"Initiating a poll for the question '{Message}'. Enter up to five options, one per line. {doneOrCancelText}");
+                Asked = true;
                 return CardResult.Continue;
             }
             else
@@ -31,17 +38,19 @@ namespace LlectroBot.Polling.Cards
                 if (CancelWords.Contains(message.Content, StringComparer.OrdinalIgnoreCase))
                 {
                     Result.Clear();
+                    await ReplyAsync("OK, cancelling the poll.");
                     return CardResult.Cancel;
                 }
                 if (CompleteWords.Contains(message.Content, StringComparer.OrdinalIgnoreCase))
                 {
                     if (Result.Count == 0)
                     {
+                        await ReplyAsync("No options were captured, cancelling the poll.");
                         return CardResult.Cancel;
                     }
                     else
                     {
-                        StartPoll();
+                        _pollTracker.CreatePoll(Context.UserMessage.Author, Context.Channel, _duration, Message, Result.ToArray());
                         return CardResult.CloseAndContinue;
                     }
                 }
@@ -56,16 +65,20 @@ namespace LlectroBot.Polling.Cards
                 else
                 {
                     Result.Add(message.Content.Trim());
-                    StartPoll();
-                    return Result.Count == 5 ? CardResult.CloseAndContinue : CardResult.Continue;
+
+                    if (Result.Count == 5)
+                    {
+                        _pollTracker.CreatePoll(Context.UserMessage.Author, Context.Channel, _duration, Message, Result.ToArray());
+                        return CardResult.CloseAndContinue;
+                    }
+                    else
+                    {
+                        return CardResult.Continue;
+                    }
+                    
                 }    
             }
             return CardResult.Continue;
-        }
-
-        private void StartPoll()
-        {
-
         }
     }
 }

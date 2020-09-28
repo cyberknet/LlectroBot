@@ -85,7 +85,7 @@ namespace Discord.Cards
             {
                 card.Context = context;
                 var cardResult = await card.MessageReceived(message);
-                if (cardResult == CardResult.CloseAndContinue)
+                if (cardResult != CardResult.Continue)
                     await CloseCard(card, cardResult);
             }
         }
