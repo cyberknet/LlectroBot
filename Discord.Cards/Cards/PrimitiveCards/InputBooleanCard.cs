@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Discord.Cards.Extensions;
 
 namespace Discord.Cards.Cards.PrimitiveCards
 {
@@ -42,7 +43,7 @@ namespace Discord.Cards.Cards.PrimitiveCards
                 else
                 {
                     var options = TrueOptions.Union(FalseOptions).ToArray();
-                    string optionString = ArrayToSentence(options);
+                    string optionString = options.ToSentence();
 
                     await ReplyAsync($"I was expecting an answer of ${optionString}. ${RetryMessage}");
                 }

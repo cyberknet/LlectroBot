@@ -147,7 +147,8 @@ namespace LlectroBot
         {
             //await Commands.AddModulesAsync(Assembly.GetEntryAssembly(), Services);
             var moduleTypes = loadedTypes.Where(t => !t.IsAbstract && typeof(CommandModuleBase).IsAssignableFrom(t));
-            foreach (var type in moduleTypes)
+            var guildModuleTypes = loadedTypes.Where(t => !t.IsAbstract && typeof(GuildCommandModuleBase).IsAssignableFrom(t));
+            foreach (var type in moduleTypes.Union(guildModuleTypes))
             {
                 await Commands.AddModuleAsync(type, ServiceProvider);
             }

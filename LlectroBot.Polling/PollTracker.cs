@@ -24,11 +24,11 @@ namespace LlectroBot.Polling
             _discordSocketClient = discordSocketClient;
             RegisterForEvents();
             _pollTimer = new System.Timers.Timer(1000 * 15); // 1000ms * 15 = 15 seconds
-            _pollTimer.Elapsed += _pollTimer_Elapsed;
+            _pollTimer.Elapsed += PollTimer_Elapsed;
             _pollTimer.Start();
         }
 
-        private void _pollTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void PollTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             DateTime Now = DateTime.Now;
             var expiringPolls = _activePolls.Where(p => p.ExpiresOn <= Now).ToArray();

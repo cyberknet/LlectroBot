@@ -54,44 +54,5 @@ namespace Discord.Cards
             return await Context.Channel.SendMessageAsync(message, isTTS, embed, options).ConfigureAwait(false);
         }
 
-        protected string ArrayToSentence(string[] options, string qualifier = "")
-        {
-            string optionString;
-
-
-            if (options == null || options.Length == 0)
-            {
-                return string.Empty;
-            }
-            else if (options.Length == 1)
-            {
-                optionString = options[0];
-            }
-            // when there are just two options in the list
-            else if (options.Length == 2)
-            {
-                optionString = string.Join($"{qualifier} and {qualifier}", options);
-            }
-            else
-            {
-                string join = $"{qualifier}, and {qualifier}";
-                optionString = string.Join($"{qualifier}, {qualifier}", options[..^3]); // join all but the last two indices with a comma
-                                                                                        // when there are three options in the list
-                if (optionString.Length == 3)
-                {
-                    // append the last index manually
-                    optionString += $"{join}{options[^1]}"; // add the last index
-                }
-                // when there are four or more options
-                else
-                {
-                    // append the remaining indices
-                    optionString += string.Join(join, options[^2..]);
-                }
-            }
-
-            return $"{qualifier}{optionString}{qualifier}";
-        }
-
     }
 }

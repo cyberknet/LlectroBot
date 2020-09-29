@@ -24,8 +24,8 @@ namespace LlectroBot.Polling.Cards
         }
         public async override Task<CardResult> MessageReceived(IMessage message, CardResult lastCardResult = CardResult.None)
         {
-            string stopOptions = ArrayToSentence(CompleteWords, "'");
-            string cancelOptions = ArrayToSentence(CancelWords, "'");
+            string stopOptions = CompleteWords.ToOxfordCommaList(", ", "or");
+            string cancelOptions = CancelWords.ToOxfordCommaList(", ", "or");
             string doneOrCancelText = $"When you are done, type {stopOptions}. To cancel, type {cancelOptions}.";
             if (!Asked)
             {
