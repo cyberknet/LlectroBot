@@ -89,9 +89,19 @@ namespace LlectroBot.Help.Modules
                 builder.WithDescription(description);
             }
 
-            if (!string.IsNullOrEmpty(syntax))
+            if (syntax != null)
             {
-                builder.AddField("Syntax", syntax);
+                if (syntax.Length == 1)
+                {
+                    builder.AddField("Syntax", syntax[0]);
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < syntax.Length; i++)
+                        sb.AppendLine(syntax[i]);
+                    builder.AddField("Syntax", sb.ToString());
+                }
             }
 
             if (!string.IsNullOrEmpty(aliases))
