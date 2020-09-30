@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Cards;
 using Discord.Commands;
+using Discord.WebSocket;
 using LlectroBot.Core.Modules;
 using LlectroBot.Core.Preconditions;
 
@@ -24,12 +25,11 @@ namespace LlectroBot.Admin.Modules
             EmbedBuilder builder = new EmbedBuilder()
                 .WithTitle("Guilds using LlectroBot")
                 .WithDescription("The following guilds have LlectroBot in their guild.");
-            var guilds = new List<IGuild>(await Context.Client.GetGuildsAsync());
-            foreach (var guild in guilds)
+            var iguilds = new List<IGuild>(await Context.Client.GetGuildsAsync());
+            var socketGuilds = iguilds.Select(g => g as SocketGuild).OrderByDescending(g => g.MemberCount);
+            foreach (var guild in socketGuilds)
             {
-                var guildMembers = await guild.GetUsersAsync();
-                var guildOwner = await guild.GetOwnerAsync();
-                builder.AddField(guild.Name, $"Members: {guildMembers.Count()}, Owner: {guildOwner.Mention}", false);
+                builder.AddField(guild.Name, $"Members: {guild.MemberCount}, Owner: {guild.Owner.Mention}", false);
             }
 
         }
