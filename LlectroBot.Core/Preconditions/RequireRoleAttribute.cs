@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using LlectroBot.Core.Configuration;
@@ -26,7 +27,7 @@ namespace LlectroBot.Core.Preconditions
                 RoleMatchType.LessThan => role < Level,
                 RoleMatchType.Equal => role == Level,
                 RoleMatchType.GreaterThan => role > Level,
-                RoleMatchType.GraterThanOrEqual => role >= Level,
+                RoleMatchType.GreaterThanOrEqual => role >= Level,
                 RoleMatchType.NotEqualTo => role != Level,
                 _ => false,
             };

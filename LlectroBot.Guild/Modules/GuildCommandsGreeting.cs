@@ -18,7 +18,7 @@ namespace LlectroBot.Guild.Modules
         [CommandDescription("Enables or disables the greeting for a guild. In the greeting, {mention} will be replaced with a mention of the user.")]
         [CommandSyntax("{prefix}{command} [on|off] [channel] [greeting]")]
         [CommandUsage(CommandUsage.Channel)]
-        [RequireRole(Roles.RoleLevel.GuildAdministrator, Roles.RoleMatchType.GraterThanOrEqual)]
+        [RequireRole(Roles.RoleLevel.GuildAdministrator, Roles.RoleMatchType.GreaterThanOrEqual)]
         public async Task Greeting(params string[] args)
         {
             string greeting = string.Empty;

@@ -18,7 +18,7 @@ namespace LlectroBot.Guild.Modules
         [CommandDescription("Enables or disables the farewell for a guild. In the farewell message, {mention} will be replaced with a mention of the user.")]
         [CommandSyntax("{prefix}{command} [on|off] [channel] [farewell message]")]
         [CommandUsage(CommandUsage.Channel)]
-        [RequireRole(Roles.RoleLevel.GuildAdministrator, Roles.RoleMatchType.GraterThanOrEqual)]
+        [RequireRole(Roles.RoleLevel.GuildAdministrator, Roles.RoleMatchType.GreaterThanOrEqual)]
         public async Task Farewell(params string[] args)
         {
             string farewell = string.Empty;

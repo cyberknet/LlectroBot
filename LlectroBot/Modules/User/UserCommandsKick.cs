@@ -10,11 +10,11 @@ namespace LlectroBot.Modules.User
     public partial class UserCommands
     {
         [Command("kick")]
-        [RequireRole(RoleLevel.SuperMember, RoleMatchType.GraterThanOrEqual)]
+        [RequireRole(RoleLevel.SuperMember, RoleMatchType.GreaterThanOrEqual)]
         [CommandDescription("Kicks a user from the channel.")]
         [CommandSyntax("{prefix}{command} [Username] [reason]")]
         [CommandUsage(CommandUsage.Both)]
-        [RequireRole(RoleLevel.SuperMember, RoleMatchType.GraterThanOrEqual)]
+        [RequireRole(RoleLevel.SuperMember, RoleMatchType.GreaterThanOrEqual)]
         public async Task Kick(IUser user, string reason)
         {
             string errorReason = string.Empty;

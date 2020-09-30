@@ -18,7 +18,7 @@ namespace LlectroBot.Guild.Modules
         [CommandSyntax("{prefix}{command} [newnickname]",
                        "{prefix}{command} [user] [newnickname]")]
         [CommandUsage(CommandUsage.Channel)]
-        [RequireRole(Roles.RoleLevel.SuperMember, Roles.RoleMatchType.GraterThanOrEqual)]
+        [RequireRole(Roles.RoleLevel.SuperMember, Roles.RoleMatchType.GreaterThanOrEqual)]
         public async Task Nickname(params string[] args)
         {
             // check if any args were provided
