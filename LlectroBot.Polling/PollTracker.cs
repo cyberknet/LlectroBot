@@ -13,11 +13,9 @@ namespace LlectroBot.Polling
     [RegisterService(typeof(IPollTracker))]
     public class PollTracker : IPollTracker
     {
-        List<IPoll> _activePolls = new List<IPoll>();
-
-        DiscordSocketClient _discordSocketClient;
-
-        System.Timers.Timer _pollTimer;
+        readonly List<IPoll> _activePolls = new List<IPoll>();
+        readonly DiscordSocketClient _discordSocketClient;
+        readonly System.Timers.Timer _pollTimer;
 
         public PollTracker(DiscordSocketClient discordSocketClient)
         {

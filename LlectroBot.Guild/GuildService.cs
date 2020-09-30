@@ -12,8 +12,8 @@ namespace LlectroBot.Guild
     [RegisterService(typeof(IGuildService))]
     public class GuildService : IGuildService
     {
-        private DiscordSocketClient _discordClient;
-        private IBotConfiguration _botConfiguration;
+        private readonly DiscordSocketClient _discordClient;
+        private readonly IBotConfiguration _botConfiguration;
         public GuildService(DiscordSocketClient discordSocketClient, IBotConfiguration botConfiguration)
         {
             _discordClient = discordSocketClient;
@@ -63,8 +63,7 @@ namespace LlectroBot.Guild
                 if (guildConfig.GreetingOnJoin && guildConfig.GreetingChannel != null)
                 {
                     string message = guildConfig.Greeting.Replace("{user}", user.Mention);
-                    var channel = _discordClient.GetChannel(guildConfig.GreetingChannel.Id) as IMessageChannel;
-                    if (channel != null)
+                    if (_discordClient.GetChannel(guildConfig.GreetingChannel.Id) is IMessageChannel channel)
                     {
                         await channel.SendMessageAsync(message);
                     }

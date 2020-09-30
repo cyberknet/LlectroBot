@@ -19,9 +19,7 @@ namespace LlectroBot.Guild.Modules
                        "{prefix}{command} [user] [newnickname]")]
         [CommandUsage(CommandUsage.Channel)]
         [RequireRole(Roles.RoleLevel.SuperMember, Roles.RoleMatchType.GraterThanOrEqual)]
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task Nickname(params string[] args)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             // check if any args were provided
             if (args.Length == 0)
@@ -31,9 +29,8 @@ namespace LlectroBot.Guild.Modules
             else
             {
                 var guildBotUser = await Context.Guild.GetCurrentUserAsync();
-                ulong userId;
                 // check if the first parameter provided is a user mention
-                if (MentionUtils.TryParseUser(args[0], out userId))
+                if (MentionUtils.TryParseUser(args[0], out ulong userId))
                 {
                     // if so, check and see if a second parameter was provided
                     if (args.Length < 2)

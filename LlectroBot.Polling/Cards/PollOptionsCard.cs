@@ -12,9 +12,9 @@ namespace LlectroBot.Polling.Cards
     {
         private bool Asked { get; set; }
         public string[] CompleteWords { get; set; }
-        private TimeSpan _duration;
+        private readonly TimeSpan _duration;
         
-        private IPollTracker _pollTracker;
+        private readonly IPollTracker _pollTracker;
         public PollOptionsCard(string message, bool isCancellable, IPollTracker pollTracker, TimeSpan duration, string[] completeWords, string[] cancelWords = null, string retryMessage = null)
             : base(message, isCancellable, cancelWords, retryMessage)
         {

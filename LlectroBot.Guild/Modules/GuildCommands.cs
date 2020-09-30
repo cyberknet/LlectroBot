@@ -13,7 +13,7 @@ namespace LlectroBot.Guild.Modules
     public partial class GuildCommands : GuildCommandModuleBase
     {
         public ICardStackManager CardStackManager { get; set; }
-        private IGuildService _guildService;
+        private readonly IGuildService _guildService;
         public GuildCommands(IDiscordClient discordClient, IDiscordBot discordBot, IServiceProvider serviceProvider, IBotConfiguration botConfiguration, ICardStackManager cardStackManager, IGuildService guildService)
             : base(discordClient, discordBot, serviceProvider, botConfiguration)
         {
