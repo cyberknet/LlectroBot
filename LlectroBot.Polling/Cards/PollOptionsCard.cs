@@ -14,8 +14,8 @@ namespace LlectroBot.Polling.Cards
         public string[] CompleteWords { get; set; }
         private readonly TimeSpan _duration;
         
-        private readonly IPollTracker _pollTracker;
-        public PollOptionsCard(string message, bool isCancellable, IPollTracker pollTracker, TimeSpan duration, string[] completeWords, string[] cancelWords = null, string retryMessage = null)
+        private readonly IPollService _pollTracker;
+        public PollOptionsCard(string message, bool isCancellable, IPollService pollTracker, TimeSpan duration, string[] completeWords, string[] cancelWords = null, string retryMessage = null)
             : base(message, isCancellable, cancelWords, retryMessage)
         {
             CompleteWords = completeWords;

@@ -9,7 +9,7 @@ using LlectroBot.Core.Services;
 
 namespace LlectroBot.Guild
 {
-    [RegisterService(typeof(IGuildService))]
+    [RegisterServiceInterface(typeof(IGuildService))]
     public class GuildService : IGuildService
     {
         private readonly DiscordSocketClient _discordClient;

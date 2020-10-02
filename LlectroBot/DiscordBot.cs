@@ -23,7 +23,7 @@ namespace LlectroBot
         private readonly DiscordSocketClient Client = null;
         public CommandService Commands { get; private set; }
         private readonly IServiceProvider ServiceProvider = null;
-        private readonly IUserTracker UserTracker = null;
+        private readonly IUserTrackerService UserTracker = null;
         private readonly IBotConfiguration BotConfiguration = null;
         private readonly ICardStackManager CardStackManager = null;
         private List<Type> loadedTypes = new List<Type>();
@@ -35,7 +35,7 @@ namespace LlectroBot
             ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
             BotConfiguration = ServiceProvider.GetService<IBotConfiguration>();
-            UserTracker = ServiceProvider.GetService<IUserTracker>();
+            UserTracker = ServiceProvider.GetService<IUserTrackerService>();
             Client = ServiceProvider.GetService<IDiscordClient>() as DiscordSocketClient;
             Logger = ServiceProvider.GetService<ILogger>();
             Commands = ServiceProvider.GetService<CommandService>();
@@ -63,24 +63,32 @@ namespace LlectroBot
 
         private void LoadServicesFromTypeList(IServiceCollection serviceCollection, IEnumerable<Type> types)
         {
+            Type discordBotServiceType = typeof(DiscordBotService);
             // loop over each of the types found
             foreach (var type in types)
             {
-                // find out what interface the type implements
-                var attr = type.GetCustomAttribute<RegisterServiceAttribute>();
-                // make sure the Interface parameter was passed
-                if (attr.Interface != null)
+                if (discordBotServiceType.IsAssignableFrom(type))
                 {
-                    // make sure the Interface parameter was actually an interface
-                    if (attr.Interface.IsInterface)
+                    // find out what interface the type implements
+                    var attr = type.GetCustomAttribute<RegisterServiceInterfaceAttribute>();
+                    // make sure the Interface parameter was passed
+                    if (attr.Interface != null)
                     {
-                        // make sure the type implements the interface
-                        if (attr.Interface.IsAssignableFrom(type))
+                        // make sure the Interface parameter was actually an interface
+                        if (attr.Interface.IsInterface)
                         {
-                            // add as a singleton, and give an initialization function
-                            serviceCollection.AddSingleton(attr.Interface, type);
-                            //serviceCollection.AddSingleton(attr.Interface, (sp) => { return CreateServiceInstance(sp, type); });
+                            // make sure the type implements the interface
+                            if (attr.Interface.IsAssignableFrom(type))
+                            {
+                                // add as a singleton, and give an initialization function
+                                serviceCollection.AddSingleton(attr.Interface, type);
+                                //serviceCollection.AddSingleton(attr.Interface, (sp) => { return CreateServiceInstance(sp, type); });
+                            }
                         }
+                    }
+                    else
+                    {
+                        serviceCollection.AddSingleton(type);
                     }
                 }
             }
@@ -106,7 +114,7 @@ namespace LlectroBot
                 loadedTypes.AddRange(Assembly.GetExecutingAssembly().GetTypes());
 
             // find all types with an IRegisterService attribute
-            var types = loadedTypes.Where(t => t.GetCustomAttributes<RegisterServiceAttribute>().Count() > 0);
+            var types = loadedTypes.Where(t => t.GetCustomAttributes<RegisterServiceInterfaceAttribute>().Count() > 0);
             return types;
         }
 

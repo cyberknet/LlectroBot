@@ -8,9 +8,9 @@ namespace LlectroBot.Modules.User
 {
     public partial class UserCommands : CommandModuleBase
     {
-        private readonly IUserTracker _userTracker = null;
+        private readonly IUserTrackerService _userTracker = null;
 
-        public UserCommands(IDiscordClient discordClient, IDiscordBot discordBot, IServiceProvider serviceProvider, IBotConfiguration botConfiguration, IUserTracker userTracker)
+        public UserCommands(IDiscordClient discordClient, IDiscordBot discordBot, IServiceProvider serviceProvider, IBotConfiguration botConfiguration, IUserTrackerService userTracker)
             : base(discordClient, discordBot, serviceProvider, botConfiguration)
         {
             _userTracker = userTracker;

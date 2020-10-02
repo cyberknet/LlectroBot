@@ -6,37 +6,33 @@ using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
+using LlectroBot.Core.Configuration;
 using LlectroBot.Core.Services;
 
 namespace LlectroBot.Polling
 {
-    [RegisterService(typeof(IPollTracker))]
-    public class PollTracker : IPollTracker
+    [RegisterServiceInterface(typeof(IPollService))]
+    public class PollService : TimerService, IPollService
     {
         readonly List<IPoll> _activePolls = new List<IPoll>();
-        readonly DiscordSocketClient _discordSocketClient;
-        readonly System.Timers.Timer _pollTimer;
 
-        public PollTracker(DiscordSocketClient discordSocketClient)
+        public PollService(DiscordSocketClient discordSocketClient, IBotConfiguration botConfiguration)
+            : base(discordSocketClient, botConfiguration)
         {
-            _discordSocketClient = discordSocketClient;
-            RegisterForEvents();
-            _pollTimer = new System.Timers.Timer(1000 * 15); // 1000ms * 15 = 15 seconds
-            _pollTimer.Elapsed += PollTimer_Elapsed;
-            _pollTimer.Start();
+            double interval = 1000 * 15;
+            InitializeTimer(interval, true);
         }
 
-        private void PollTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        protected override void OnTimerElapsed(DateTime signalTime)
         {
-            DateTime Now = DateTime.Now;
-            var expiringPolls = _activePolls.Where(p => p.ExpiresOn <= Now).ToArray();
-            for(int i = 0; i < expiringPolls.Length; i++)
+            var expiringPolls = _activePolls.Where(p => p.ExpiresOn <= signalTime).ToArray();
+            for (int i = 0; i < expiringPolls.Length; i++)
             {
                 ExpirePoll(expiringPolls[i]);
             }
         }
 
-        private void RegisterForEvents()
+        protected override void RegisterForEvents()
         {
             _discordSocketClient.ReactionAdded += Client_ReactionAdded;
         }

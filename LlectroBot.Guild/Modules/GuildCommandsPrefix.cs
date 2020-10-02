@@ -28,7 +28,7 @@ namespace LlectroBot.Guild.Modules
                 var newPrefix = args[0][0];
                 var previousPrefix = Context.GuildConfiguration.CommandPrefix;
                 Context.GuildConfiguration.CommandPrefix = newPrefix;
-                await ReplyAsync("Prefix changed from {previousPrefix} to {newPrefix}.");
+                await ReplyAsync($"Prefix changed from {previousPrefix} to {newPrefix}.");
             }
         }
     }

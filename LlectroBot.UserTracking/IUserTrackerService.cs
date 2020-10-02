@@ -2,7 +2,7 @@
 
 namespace LlectroBot.UserTracking
 {
-    public interface IUserTracker
+    public interface IUserTrackerService
     {
         UserState GetUserState(IGuild guild, IUser user);
         //void UpdateUser(IGuild guild, IUser oldUser, IUser newUser);

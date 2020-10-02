@@ -7,11 +7,11 @@ namespace LlectroBot.UserTracking.Modules
 {
     public partial class UserTrackingCommands : CommandModuleBase
     {
-        private readonly IUserTracker _userTracker = null;
+        private readonly IUserTrackerService _userTracker = null;
 
         public void Test() { }
 
-        public UserTrackingCommands(IDiscordClient discordClient, IDiscordBot discordBot, IServiceProvider serviceProvider, IBotConfiguration botConfiguration, IUserTracker userTracker)
+        public UserTrackingCommands(IDiscordClient discordClient, IDiscordBot discordBot, IServiceProvider serviceProvider, IBotConfiguration botConfiguration, IUserTrackerService userTracker)
             : base(discordClient, discordBot, serviceProvider, botConfiguration)
         {
             _userTracker = userTracker;

@@ -10,7 +10,7 @@ using LlectroBot.Core.Services;
 
 namespace LlectroBot.Core.Cards
 {
-    [RegisterService(typeof(ICardStackManager))]
+    [RegisterServiceInterface(typeof(ICardStackManager))]
     public class LlectroBotCardStackManager : CardStackManager<LlectroBotCardContext>
     {
         public static string TemplateFilename { get; set; } = "usertracker.template.json";

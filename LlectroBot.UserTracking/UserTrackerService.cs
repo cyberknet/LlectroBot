@@ -11,22 +11,17 @@ using LlectroBot.Core.Services;
 
 namespace LlectroBot.UserTracking
 {
-    [RegisterService(typeof(IUserTracker))]
-    public class UserTracker : IUserTracker
+    [RegisterServiceInterface(typeof(IUserTrackerService))]
+    public class UserTrackerService : DiscordBotService, IUserTrackerService
     {
         private readonly List<GuildTracker> _guilds = new List<GuildTracker>();
         private const string templateFilename = "usertracking.template.json";
         private const string dataFilename = "usertracking.json";
 
-        private DiscordSocketClient DiscordClient { get; set; }
-
-        public UserTracker(DiscordSocketClient discordSocketClient)
+        public UserTrackerService(DiscordSocketClient discordSocketClient, IBotConfiguration botConfiguration)
+            : base(discordSocketClient, botConfiguration)
         {
-            DiscordClient = discordSocketClient;
-
             _guilds = ReadJson().GetAwaiter().GetResult();
-
-            RegisterForEvents();
         }
 
 
@@ -140,17 +135,17 @@ namespace LlectroBot.UserTracking
             return userState;
         }
         #region DiscordSocketClient events
-        private void RegisterForEvents()
+        protected override void RegisterForEvents()
         {
-            DiscordClient.UserBanned += Client_UserBanned;
-            DiscordClient.UserIsTyping += Client_UserIsTyping;
-            DiscordClient.UserJoined += Client_UserJoined;
-            DiscordClient.UserLeft += Client_UserLeft;
-            DiscordClient.UserUpdated += Client_UserUpdated;
-            DiscordClient.UserVoiceStateUpdated += Client_UserVoiceStateUpdated;
-            DiscordClient.MessageReceived += Client_MessageReceived
+            _discordSocketClient.UserBanned += Client_UserBanned;
+            _discordSocketClient.UserIsTyping += Client_UserIsTyping;
+            _discordSocketClient.UserJoined += Client_UserJoined;
+            _discordSocketClient.UserLeft += Client_UserLeft;
+            _discordSocketClient.UserUpdated += Client_UserUpdated;
+            _discordSocketClient.UserVoiceStateUpdated += Client_UserVoiceStateUpdated;
+            _discordSocketClient.MessageReceived += Client_MessageReceived
                 ;
-            DiscordClient.GuildMemberUpdated += Client_GuildMemberUpdated;
+            _discordSocketClient.GuildMemberUpdated += Client_GuildMemberUpdated;
         }
 
         private Task Client_MessageReceived(SocketMessage arg)
@@ -162,7 +157,7 @@ namespace LlectroBot.UserTracking
             if (message.Author.IsBot)
                 return Task.CompletedTask;
             // don't process messages from the current bot
-            if (message.Author.Id == DiscordClient.CurrentUser.Id)
+            if (message.Author.Id == _discordSocketClient.CurrentUser.Id)
                 return Task.CompletedTask;
 
             if (arg.Channel is SocketTextChannel tch)

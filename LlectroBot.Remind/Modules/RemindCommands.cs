@@ -8,15 +8,17 @@ using LlectroBot.Core.Configuration;
 using LlectroBot.Core.Modules;
 using LlectroBot.Core.Preconditions;
 
-namespace LlectroBot.Admin.Modules
+namespace LlectroBot.Remind.Modules
 {
-    public partial class AdminCommands : GuildCommandModuleBase
+    public partial class RemindCommands : CommandModuleBase
     {
         public ICardStackManager CardStackManager { get; set; }
-        public AdminCommands(IDiscordClient discordClient, IDiscordBot discordBot, IServiceProvider serviceProvider, IBotConfiguration botConfiguration, ICardStackManager cardStackManager)
+        private readonly IReminderService _reminderService;
+        public RemindCommands(IDiscordClient discordClient, IDiscordBot discordBot, IServiceProvider serviceProvider, IBotConfiguration botConfiguration, ICardStackManager cardStackManager, IReminderService reminderService)
             : base(discordClient, discordBot, serviceProvider, botConfiguration)
         {
             CardStackManager = cardStackManager;
+            _reminderService = reminderService;
         }
     }
 }
